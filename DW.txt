@@ -1,0 +1,47 @@
+[RoutingRule]
+DOMAIN,www.baidu.com,PROXY
+DOMAIN,m.baidu.com,PROXY
+DOMAIN,dlied1.qq.com,PROXY
+DOMAIN,down.anticheatexpert.com,PROXY
+DOMAIN,drmenv.auth-gmspack.xyz,PROXY
+DOMAIN,download.ksk2oskwv-pd.xyz,PROXY
+DOMAIN-KEYWORD,mbgame,PROXY
+IP-CIDR,182.254.116.117/32,PROXY
+PORT,17500,PROXY
+IP-CIDR,101.32.0.0/16,PROXY
+IP-CIDR,119.28.0.0/16,PROXY
+IP-CIDR,129.226.0.0/16,PROXY
+IP-CIDR,150.109.0.0/16,PROXY
+FINAL,DIRECT
+
+[RoutingDomainStrategy]
+AsIs
+
+[FreedomDomainStrategy]
+AsIs
+
+[LocalPolicy]
+bufferSize = 4096
+connIdle = 300
+downlinkOnly = 0
+handshake = 4
+uplinkOnly = 0
+
+[DnsServer]
+182.254.116.116
+[DnsRule]
+
+[DnsHost]
+
+[DnsClientIp]
+
+[Log]
+loglevel = none
+
+[PerAppVpn]
+
+[PerAppMode]
+
+[PerAppAllow]
+
+[PerAppDisallow]
