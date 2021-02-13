@@ -6,6 +6,7 @@ DOMAIN,download.ksk2oskwv-pd.xyz,PROXY
 DOMAIN,dlied1.qq.com,PROXY
 DOMAIN,down.anticheatexpert.com,PROXY
 DOMAIN-KEYWORD,mbgame,PROXY
+DOMAIN-KEYWORD,qlogo.cn,PROXY
 DOMAIN-KEYWORD,pandora.game.qq.com,PROXY
 DOMAIN,vv.video.com,PROXY
 PORT,5692,PROXY
