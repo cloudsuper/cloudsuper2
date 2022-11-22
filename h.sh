@@ -279,7 +279,6 @@ backend_docking_set(){
         install_tool
         check_docker
 	nginx_file
-        docker run --name nginx -d -p 80:80 -p 8080:8080 -v /usr/local/docker/nginx/nginx.conf:/etc/nginx/nginx.conf  -v /usr/local/docker/nginx/html:/usr/share/nginx/html --privileged=true  -d nginx
         setenforce 0
         sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
         greenbg "恭喜您，后端节点已搭建成功"
