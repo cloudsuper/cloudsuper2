@@ -120,7 +120,7 @@ Nodes:
       EnableDNS: false # Use custom DNS config, Please ensure that you set the dns.json well
       DNSType: AsIs # AsIs, UseIP, UseIPv4, UseIPv6, DNS strategy
       EnableProxyProtocol: false # Only works for WebSocket and TCP
-      EnableFallback: ture # Only support for Trojan and Vless
+      EnableFallback: true # Only support for Trojan and Vless
       FallBackConfigs:  # Support multiple fallbacks
         -
           SNI: # TLS SNI(Server Name Indication), Empty for any
