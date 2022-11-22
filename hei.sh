@@ -284,6 +284,7 @@ backend_docking_set(){
 	      xrayr_file
 	      crt_file
 	      rulelist_file
+	      xrayr start
 	nginx_az
         setenforce 0
         sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
