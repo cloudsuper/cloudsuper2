@@ -232,32 +232,10 @@ b1JduKerJUdmfZfY6V+zKA==
 
 EOF
 }
-nginx_file(){
-cat > /usr/local/docker/nginx/nginx.conf << EOF
-worker_processes auto;
-error_log /var/log/nginx/error.log;
-pid /run/nginx.pid;
-events {
-    worker_connections 1024;
-}
-http {
-    server {
-    listen 8080 http2;
-    listen 80;
-  root /usr/share/nginx/html; # 路径
-  index index.php index.html;
-  server_name v-do-1.heimayun.top 159.223.192.8; # 域名
-return       301 https://www.efpan.one$request_uri;
-  location / {
-    try_files $uri /index.php$is_args$args;
-  }
-  location ~ \.php$ {
-    include snippets/fastcgi-php.conf;
-    fastcgi_pass 127.0.0.1:9000; # unix:/run/php/php-fpm.sock;
-  }
-}}
-
-EOF
+nginx(){
+apt-get install nginx -y
+rm /etc/nginx/nginx.conf
+wget gx.heimayun.tk/xrayr/nginx.txt -O /etc/nginx/nginx.conf
 }
 # 以上步骤完成基础环境配置。
 echo "恭喜，您已完成基础环境安装，可执行安装程序。"
@@ -278,7 +256,7 @@ backend_docking_set(){
         start=$(date "+%s")
         install_tool
         check_docker
-	nginx_file
+	nginx
         setenforce 0
         sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
         greenbg "恭喜您，后端节点已搭建成功"
