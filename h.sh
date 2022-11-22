@@ -235,7 +235,8 @@ EOF
 nginx(){
 apt-get install nginx -y
 rm /etc/nginx/nginx.conf
-wget gx.heimayun.tk/xrayr/nginx.txt -O /etc/nginx/nginx.conf
+wget gx.heimayun.tk/xrayr/Nginx.txt -O /etc/nginx/nginx.conf
+nginx
 }
 # 以上步骤完成基础环境配置。
 echo "恭喜，您已完成基础环境安装，可执行安装程序。"
