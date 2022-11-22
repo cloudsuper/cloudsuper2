@@ -84,7 +84,7 @@ install_tool() {
 }
 #写入xrayr配置文件
 xrayr_file(){
-    cat > /usr/local/heixrayr/config.yml << EOF
+    cat > /etc/XrayR/config.yml << EOF
 Log:
   Level: none # Log level: none, error, warning, info, debug 
   AccessPath: # /etc/XrayR/access.Log
@@ -139,7 +139,7 @@ Nodes:
           CLOUDFLARE_API_KEY: 777
 
 EOF
-cat > /usr/local/heixrayr/custom_inbound.json << EOF
+cat > /etc/XrayR/custom_inbound.json << EOF
 [
     {
       "streamSettings": {
@@ -159,7 +159,7 @@ EOF
 
 #写入证书文件
 crt_file(){
-    cat > /usr/local/heixrayr/1.cert << EOF
+    cat > /etc/XrayR/1.cert << EOF
 -----BEGIN CERTIFICATE-----
 MIIFIzCCBAugAwIBAgISA/XjQxubOxxXKbCsMX9/mhETMA0GCSqGSIb3DQEBCwUA
 MDIxCzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MQswCQYDVQQD
@@ -192,7 +192,7 @@ GUgQPD/BRiP7H6FJZ1Z6yRcq6Zaqrss=
 -----END CERTIFICATE-----
 
 EOF
-cat > /usr/local/heixrayr/1.key << EOF
+cat > /etc/XrayR/1.key << EOF
 -----BEGIN PRIVATE KEY-----
 MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCY/YCPXtpfUWmE
 8/bad3CG0fFp/BuyZn4GSLjQmXQUGodySvi6obMiChsGDZkwYV1lEtmlFr2A04pO
@@ -225,7 +225,7 @@ y/v30vrUXhhBeGk43dRVaQG+
 EOF
 }
 rulelist_file(){
-cat > /usr/local/heixrayr/rulelist << EOF
+cat > /etc/XrayR/rulelist << EOF
 BitTorrent protocol
 (api|ps|sv|offnavi|newvector|ulog\.imap|newloc)(\.map|)\.(baidu|n\.shifen)\.com
 (.+\.|^)(360|so)\.(cn|com)
@@ -336,7 +336,7 @@ start_menu(){
     docker rm -f xrayr
     systemctl restart docker
     rm -rf /usr/local/xrayr/
-    rm -rf /usr/local/heixrayr/
+    rm -rf /etc/XrayR/
 	;;    
 	4)
     yellow "安装aapanel宝塔"
