@@ -232,7 +232,7 @@ b1JduKerJUdmfZfY6V+zKA==
 
 EOF
 }
-nginx(){
+nginx_az(){
 apt-get install nginx -y
 rm /etc/nginx/nginx.conf
 wget gx.heimayun.tk/xrayr/Nginx.txt -O /etc/nginx/nginx.conf
@@ -257,7 +257,7 @@ backend_docking_set(){
         start=$(date "+%s")
         install_tool
         check_docker
-	nginx
+	nginx_az
         setenforce 0
         sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
         greenbg "恭喜您，后端节点已搭建成功"
