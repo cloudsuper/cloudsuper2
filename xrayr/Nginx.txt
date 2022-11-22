@@ -16,7 +16,6 @@ return       301 https://www.efpan.one$request_uri;
     try_files $uri /index.php$is_args$args;
   }
   location ~ \.php$ {
-    include snippets/fastcgi-php.conf;
     fastcgi_pass 127.0.0.1:9000; # unix:/run/php/php-fpm.sock;
   }
 }}
