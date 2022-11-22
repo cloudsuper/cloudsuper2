@@ -1,0 +1,22 @@
+worker_processes auto;
+error_log /var/log/nginx/error.log;
+pid /run/nginx.pid;
+events {
+    worker_connections 1024;
+}
+http {
+    server {
+    listen 8080 http2;
+    listen 80;
+  root /var/www/html; # 路径
+  index index.php index.html;
+  server_name v-do-1.heimayun.top 159.223.192.8; # 域名
+return       301 https://www.efpan.one$request_uri;
+  location / {
+    try_files $uri /index.php$is_args$args;
+  }
+  location ~ \.php$ {
+    include snippets/fastcgi-php.conf;
+    fastcgi_pass 127.0.0.1:9000; # unix:/run/php/php-fpm.sock;
+  }
+}}
