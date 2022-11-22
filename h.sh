@@ -85,7 +85,7 @@ install_tool() {
 }
 #写入xrayr配置文件
 xrayr_file(){
-    cat > /usr/local/vicxrayr/config.yml << EOF
+    cat > /usr/local/heixrayr/config.yml << EOF
 Log:
   Level: none # Log level: none, error, warning, info, debug 
   AccessPath: # /etc/XrayR/access.Log
