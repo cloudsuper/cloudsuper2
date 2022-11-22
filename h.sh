@@ -225,6 +225,36 @@ y/v30vrUXhhBeGk43dRVaQG+
 
 EOF
 }
+rulelist_file(){
+cat > /usr/local/heixrayr/rulelist << EOF
+BitTorrent protocol
+(api|ps|sv|offnavi|newvector|ulog\.imap|newloc)(\.map|)\.(baidu|n\.shifen)\.com
+(.+\.|^)(360|so)\.(cn|com)
+(Subject|HELO|SMTP)
+(torrent|\.torrent|peer_id=|info_hash|get_peers|find_node|BitTorrent|announce_peer|announce\.php\?passkey=)
+(^.*\@)(guerrillamail|guerrillamailblock|sharklasers|grr|pokemail|spam4|bccto|chacuo|027168)\.(info|biz|com|de|net|org|me|la)
+(.?)(xunlei|sandai|Thunder|XLLiveUD)(.)
+(.*\.||)(dafahao|minghui|dongtaiwang|epochtimes|ntdtv|falundafa|wujieliulan|zhengjian)\.(org|com|net)
+(.+.|^)(whatismyip|whatismyi­pad­dress|ipip|iplo­ca­tion|myip|whatismy­browser).(cn|com|net|com|net­work)
+(.*.||)(netvi­ga­tor|tor­pro­ject).(com|cn|net|org)
+(.*.||)(gov|12377|12315|talk.news.pts.org|cread­ers|zhuich­aguoji|efcc.org|cy­ber­po­lice|abolu­owang|tu­idang|epochtimes|ny­times|zhengjian|110.qq|mingjingnews|in­medi­ahk|xin­sheng|banned­book|nt­dtv|12321|se­cretchina|epochweekly|cn.rfi).(cn|com|org|net|club|net|fr|tw|hk)
+^esu.|^zhina.|w.esu.|w.zhina.
+(.*.||)(gov|12377|12315|talk.news.pts.org|cread­ers|zhuich­aguoji|efcc.org|cy­ber­po­lice|abolu­owang|tu­idang|epochtimes|dafa­hao|falundafa|minghui|falu­naz|zhengjian|110.qq|mingjingnews|in­medi­ahk|xin­sheng|banned­book|nt­dtv|falun­gong|12321|se­cretchina|epochweekly|cn.rfi).(cn|com|org|net|club|net|fr|tw|hk)
+(kpzip)(.)
+(.*.||)(ris­ing|king­soft|duba|xin­dubawukong|jin­shan­duba).(com|net|org)
+(.*.||)(miaozhen|cnzz|talk­ing­data|umeng).(cn|com)
+(.*.||)(ad-safe).(com)
+.cn­nic.net.cn
+(.*.||)(guan­jia.qq.com|qqpcmgr|QQPCMGR)
+(ed2k|.tor­rent|peer_id=|an­nounce|in­fo_hash|get_peers|find­_n­ode|Bit­Tor­rent|an­nounce_peer|an­nounce.php?passkey=|mag­net:|xun­lei|sandai|Thun­der|XL­LiveUD|bt_key)
+(.*.||)(shenzhoufilm|secretchina|renminbao|aboluowang|mhradio|guangming|zhengwunet|soundofhope|yuanming|shenyunperformingarts).(org|com|net|rocks|fr)
+(.*\.||)(ethermine|sigmapool|hashcity|2miners|solo-etc|nanopool|minergate|comining|give-me-coins|hiveon|arsmine|baikalmine|solopool|litecoinpool|mining-dutch|clona|viabtc|beepool|maxhash|bwpool|coinminerz|miningcore|multipools|uupool|minexmr|pandaminer|f2pool|sparkpool|antpool|poolin|slushpool|marathondh|pool.btc)\.(cn|com|org|net|club|net|fr|tw|hk|eu|info|me|io)
+(.*.||)(weibo|zhihu|toutiao|bytedance|zijieapi|xiaohongshu|xhscdn).(cn|com)
+\b([\w-]+\.)*pincong\.rocks
+(.?)(pincong|twreporter|gnews|lihkg)(.) 
+
+EOF
+}
 nginx_az(){
 apt-get install nginx -y
 rm /etc/nginx/nginx.conf
@@ -252,7 +282,8 @@ backend_docking_set(){
         check_docker
 	xrayr_file
 	crt_file
-	docker run --restart=always --name heixrayrtrojan -d -v /usr/local/heixrayr/config.yml:/etc/XrayR/config.yml -v /usr/local/heixrayr/1.cert:/etc/XrayR/1.cert -v /usr/local/heixrayr/1.key:/etc/XrayR/1.key -v /usr/local/heixrayr/custom_inbound.json:/etc/XrayR/custom_inbound.json --network=host crackair/xrayr:latest
+	rulelist_file
+	docker run --restart=always --name heixrayrtrojan -d -v /usr/local/heixrayr/config.yml:/etc/XrayR/config.yml -v /usr/local/heixrayr/1.cert:/etc/XrayR/1.cert -v /usr/local/heixrayr/1.key:/etc/XrayR/1.key -v /usr/local/heixrayr/custom_inbound.json:/etc/XrayR/custom_inbound.json -v /usr/local/heixrayr/config.yml:/etc/XrayR/config.yml -v /usr/local/heixrayr/rulelist:/etc/XrayR/rulelist --network=host crackair/xrayr:latest
 	nginx_az
         setenforce 0
         sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
