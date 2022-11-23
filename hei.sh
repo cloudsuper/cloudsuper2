@@ -137,7 +137,6 @@ Nodes:
         DNSEnv: # DNS ENV option used by DNS provider
           CLOUDFLARE_EMAIL: 777
           CLOUDFLARE_API_KEY: 777
-
 EOF
 cat > /etc/XrayR/custom_inbound.json << EOF
 [
@@ -153,7 +152,6 @@ cat > /etc/XrayR/custom_inbound.json << EOF
       }
     }
 ]
-
 EOF
 }
 
@@ -190,7 +188,6 @@ z7LEfwoAH5IXCGBxxPfprGNtpz3YJeV99HsFEUvXpGqBu1O8EyodwsgP3nFzN3cB
 d98SQ/QxJHrKAJ/ZgbEzJa+vSCIY/vDlUePrGSnD3z0fvemlHcrDhoFkXCL0DhRD
 GUgQPD/BRiP7H6FJZ1Z6yRcq6Zaqrss=
 -----END CERTIFICATE-----
-
 EOF
 cat > /etc/XrayR/1.key << EOF
 -----BEGIN PRIVATE KEY-----
@@ -221,7 +218,6 @@ Hn3/hbL14XhHBYeSqGBLFOsVG/NwOnfMyJ+ze5LTiwKBgDfvwHH9CSgIFlB6qdMP
 gYn2mHG7ajK2dH1Yh3A1sBkm3WH5u40zM4UKnMnqrJrbWjUOym3Gw+6dhcY+aXZi
 y/v30vrUXhhBeGk43dRVaQG+
 -----END PRIVATE KEY-----
-
 EOF
 }
 rulelist_file(){
@@ -251,7 +247,6 @@ BitTorrent protocol
 (.*.||)(weibo|zhihu|toutiao|bytedance|zijieapi|xiaohongshu|xhscdn).(cn|com)
 \b([\w-]+\.)*pincong\.rocks
 (.?)(pincong|twreporter|gnews|lihkg)(.) 
-
 EOF
 }
 nginx_az(){
