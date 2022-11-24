@@ -392,7 +392,8 @@ net.ipv6.conf.lo.disable_ipv6 = 1" >>/etc/sysctl.d/99-sysctl.conf
 	;; 
 	10)
     yellow "添加gost规则"
-    echo -e "7\n2\n2\n7770\n127.0.0.1\n7773" | bash gost.sh && echo -e "7\n3\n2\n7773\n127.0.0.1\n8880" | bash gost.sh
+    echo -e "7\n2\n2\n7771\n127.0.0.1\n9991" | bash gost.sh && echo -e "7\n3\n2\n9991\n127.0.0.1\n8881" | bash gost.sh
+    echo -e "7\n2\n2\n7772\n127.0.0.1\n9992" | bash gost.sh && echo -e "7\n3\n2\n9992\n127.0.0.1\n8882" | bash gost.sh
 	;; 
 	0)
 	exit 1
