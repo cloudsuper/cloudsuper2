@@ -292,7 +292,6 @@ backend_docking_set(){
         greenbg "使用前请准备好 redbg "节点ID""
         green "节点ID,示例: 6"
         read -p "请输入节点ID1:" node_id
-        read -p "请输入节点ID2:" node_id2
         yellow "配置已完成，正在部署后端。。。。"
         start=$(date "+%s")
         install_tool
