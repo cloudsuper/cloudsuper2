@@ -104,7 +104,7 @@ Nodes:
       ApiHost: "https://kilcdn1q2.heimayun.xyz"
       ApiKey: "heimayunheimayun"
       NodeID: $node_id
-      NodeType: V2ray # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
+      NodeType: Trojan # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
       Timeout: 30 # Timeout for the api request
       EnableVless: false # Enable Vless for V2ray Type
       EnableXTLS: false # Enable XTLS for V2ray and Trojan
@@ -127,8 +127,8 @@ Nodes:
           Dest: 8080 # Required, Destination of fallback, check https://xtls.github.io/config/fallback/ for details.
           ProxyProtocolVer: 0 # Send PROXY protocol version, 0 for dsable
       CertConfig:
-        CertMode: none # Option about how to get certificate: none, file, http, dns. Choose "none" will forcedly disable the tls config.
-        CertDomain: "wp.heimayun.top" # Domain to cert
+        CertMode: file # Option about how to get certificate: none, file, http, dns. Choose "none" will forcedly disable the tls config.
+        CertDomain: "146-190-102-199.nhost.00cdn.com" # Domain to cert
         CertFile: /etc/XrayR/1.cert # Provided if the CertMode is file
         KeyFile: /etc/XrayR/1.key
         Provider: cloudflare # DNS cert provider, Get the full support list here: https://go-acme.github.io/lego/dns/
@@ -142,7 +142,7 @@ Nodes:
       ApiHost: "https://kilcdn1q2.heimayun.xyz"
       ApiKey: "heimayunheimayun"
       NodeID: $node_id2
-      NodeType: V2ray # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
+      NodeType: Trojan # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
       Timeout: 30 # Timeout for the api request
       EnableVless: false # Enable Vless for V2ray Type
       EnableXTLS: false # Enable XTLS for V2ray and Trojan
@@ -165,8 +165,8 @@ Nodes:
           Dest: 8080 # Required, Destination of fallback, check https://xtls.github.io/config/fallback/ for details.
           ProxyProtocolVer: 0 # Send PROXY protocol version, 0 for dsable
       CertConfig:
-        CertMode: none # Option about how to get certificate: none, file, http, dns. Choose "none" will forcedly disable the tls config.
-        CertDomain: "wp.heimayun.top" # Domain to cert
+        CertMode: file # Option about how to get certificate: none, file, http, dns. Choose "none" will forcedly disable the tls config.
+        CertDomain: "146-190-102-199.nhost.00cdn.com" # Domain to cert
         CertFile: /etc/XrayR/1.cert # Provided if the CertMode is file
         KeyFile: /etc/XrayR/1.key
         Provider: cloudflare # DNS cert provider, Get the full support list here: https://go-acme.github.io/lego/dns/
