@@ -278,8 +278,7 @@ backend_docking_set(){
 	xrayr_file
 	crt_file
 	rulelist_file
-	docker run --restart=always --name heixrayrtrojan -d -v /usr/local/heixrayr/config.yml:/etc/XrayR/config.yml -v /usr/local/heixrayr/1.cert:/etc/XrayR/1.cert -v /usr/local/heixrayr/1.key:/etc/XrayR/1.key -v /usr/local/heixrayr/custom_inbound.json:/etc/XrayR/custom_inbound.json -v /usr/local/heixrayr/config.yml:/etc/XrayR/config.yml -v /usr/local/heixrayr/rulelist:/etc/XrayR/rulelist --network=host crackair/xrayr:latest
-	nginx_az
+	docker run --restart=always --name heixrayr -d -v /usr/local/heixrayr/config.yml:/etc/XrayR/config.yml -v /usr/local/heixrayr/1.cert:/etc/XrayR/1.cert -v /usr/local/heixrayr/1.key:/etc/XrayR/1.key -v /usr/local/heixrayr/config.yml:/etc/XrayR/config.yml -v /usr/local/heixrayr/rulelist:/etc/XrayR/rulelist --network=host crackair/xrayr:latest
         setenforce 0
         sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
         greenbg "恭喜您，后端节点已搭建成功"
