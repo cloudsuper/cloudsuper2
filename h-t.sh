@@ -410,9 +410,8 @@ start_menu(){
 	;;            
 	3)
     yellow "移除旧docker和证书配置文件夹"
-    docker rm -f xrayrtrojan
     docker rm -f heixrayrtrojan
-    docker rm -f xrayr
+    docker rm -f heixrayr
     systemctl restart docker
     rm -rf /usr/local/xrayr/
     rm -rf /usr/local/heixrayr/
