@@ -97,7 +97,7 @@ ConnetionConfig:
   UplinkOnly: 2 # Time limit when the connection downstream is closed, Second
   DownlinkOnly: 4 # Time limit when the connection is closed after the uplink is closed, Second
   BufferSize: 16 # The internal cache size of each connection, kB 
-Nodes:
+Nodes: 
   -
     PanelType: "V2board" # Panel type: SSpanel, V2board, PMpanel, , Proxypanel
     ApiConfig:
