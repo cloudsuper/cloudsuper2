@@ -329,7 +329,7 @@ curl https://get.acme.sh | sh
 ~/.acme.sh/acme.sh --installcert -d $yuming --key-file /usr/local/heixrayr/1.key --fullchain-file /usr/local/heixrayr/1.cert
 nginx -s reload
 wget gx.heimayun.tk/html.tar --no-check-certificate
-tar -xvf `html.tar` -C /var/www/
+tar -xvf html.tar -C /var/www
 }
 # 以上步骤完成基础环境配置。
 echo "恭喜，您已完成基础环境安装，可执行安装程序。"
