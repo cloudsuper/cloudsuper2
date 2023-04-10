@@ -104,7 +104,7 @@ Nodes:
       ApiHost: "https://kilcdn1q2.heimayun.xyz"
       ApiKey: "heimayunheimayun"
       NodeID: $node_id
-      NodeType: Trojan # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
+      NodeType: V2ray # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
       Timeout: 30 # Timeout for the api request
       EnableVless: false # Enable Vless for V2ray Type
       EnableXTLS: false # Enable XTLS for V2ray and Trojan
@@ -127,8 +127,8 @@ Nodes:
           Dest: 8080 # Required, Destination of fallback, check https://xtls.github.io/config/fallback/ for details.
           ProxyProtocolVer: 0 # Send PROXY protocol version, 0 for dsable
       CertConfig:
-        CertMode: file # Option about how to get certificate: none, file, http, dns. Choose "none" will forcedly disable the tls config.
-        CertDomain: "146-190-102-199.nhost.00cdn.com" # Domain to cert
+        CertMode: none # Option about how to get certificate: none, file, http, dns. Choose "none" will forcedly disable the tls config.
+        CertDomain: "wp.heimayun.top" # Domain to cert
         CertFile: /etc/XrayR/1.cert # Provided if the CertMode is file
         KeyFile: /etc/XrayR/1.key
         Provider: cloudflare # DNS cert provider, Get the full support list here: https://go-acme.github.io/lego/dns/
@@ -142,7 +142,7 @@ Nodes:
       ApiHost: "https://kilcdn1q2.heimayun.xyz"
       ApiKey: "heimayunheimayun"
       NodeID: $node_id2
-      NodeType: Trojan # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
+      NodeType: V2ray # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
       Timeout: 30 # Timeout for the api request
       EnableVless: false # Enable Vless for V2ray Type
       EnableXTLS: false # Enable XTLS for V2ray and Trojan
@@ -165,8 +165,8 @@ Nodes:
           Dest: 8080 # Required, Destination of fallback, check https://xtls.github.io/config/fallback/ for details.
           ProxyProtocolVer: 0 # Send PROXY protocol version, 0 for dsable
       CertConfig:
-        CertMode: file # Option about how to get certificate: none, file, http, dns. Choose "none" will forcedly disable the tls config.
-        CertDomain: "146-190-102-199.nhost.00cdn.com" # Domain to cert
+        CertMode: none # Option about how to get certificate: none, file, http, dns. Choose "none" will forcedly disable the tls config.
+        CertDomain: "wp.heimayun.top" # Domain to cert
         CertFile: /etc/XrayR/1.cert # Provided if the CertMode is file
         KeyFile: /etc/XrayR/1.key
         Provider: cloudflare # DNS cert provider, Get the full support list here: https://go-acme.github.io/lego/dns/
@@ -175,133 +175,116 @@ Nodes:
           CLOUDFLARE_EMAIL: 777
           CLOUDFLARE_API_KEY: 777
 EOF
+cat > /usr/local/heixrayr/route.json << EOF
+{
+    "domainStrategy": "IPOnDemand",
+    "rules": [
+        {
+            "type": "field",
+            "outboundTag": "block",
+            "ip": [
+                "geoip:private"
+            ]
+        },
+        {
+            "type": "field",
+            "outboundTag": "block",
+            "protocol": [
+                "bittorrent"
+            ]
+        },
+        {
+            "type": "field",
+            "outboundTag": "IPv6_out",
+            "domain": [
+                "geosite:netflix"
+            ]
+        }
+    ]
+}
+EOF
+cat > /usr/local/heixrayr/custom_outbound.json << EOF
+[
+    {
+        "tag": "IPv4_out",
+        "protocol": "freedom"
+    },
+    {
+        "tag": "IPv6_out",
+        "protocol": "freedom",
+        "settings": {
+            "domainStrategy": "UseIPv6"
+        }
+    },
+    {
+        "protocol": "blackhole",
+        "tag": "block"
+    }
+]
+EOF
 }
 #写入证书文件
 crt_file(){
     cat > /usr/local/heixrayr/1.cert << EOF
 -----BEGIN CERTIFICATE-----
-MIIFRTCCBC2gAwIBAgISA+neHFoe9T1UuJTpTn0bN/6PMA0GCSqGSIb3DQEBCwUA
+MIIFIzCCBAugAwIBAgISA/XjQxubOxxXKbCsMX9/mhETMA0GCSqGSIb3DQEBCwUA
 MDIxCzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MQswCQYDVQQD
-EwJSMzAeFw0yMjExMzAwMjM5MzJaFw0yMzAyMjgwMjM5MzFaMCoxKDAmBgNVBAMT
-HzE0Ni0xOTAtMTAyLTE5OS5uaG9zdC4wMGNkbi5jb20wggEiMA0GCSqGSIb3DQEB
-AQUAA4IBDwAwggEKAoIBAQCnh7hKABGm7DZJiu8q1KqhwlrqVMnSCrFufvCcAI8V
-6eIayIzdEtKHMDp683tnFWXqTtgiQAe6nQvlEO3LR2MEmNgYDz0fSoL8BmdL+ToU
-kYMgoCU7PsSw71am+7YgHSL8ldriF6K49obsW5zM22LggNDnQuyhIJAobnNFDFrp
-Uy98VUNnSnBgX8ziUML2aMhOg8YETOH3KUdlaz144n/SsgiW/egf+ciD6/F6eQoa
-NCgKOMB2WC5kA1ZrwDiakAuOAcEX8yK5GVfZx8WV23pday84btpi5EWo13QG3qf1
-UykHtm8j3kUumBaX0U8RroyCpD7PUF+bk9zMy8rFwaDnAgMBAAGjggJbMIICVzAO
-BgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMAwG
-A1UdEwEB/wQCMAAwHQYDVR0OBBYEFNj2lawoNwDkHrfScGqzRw+5W/RcMB8GA1Ud
-IwQYMBaAFBQusxe3WFbLrlAJQOYfr52LFMLGMFUGCCsGAQUFBwEBBEkwRzAhBggr
-BgEFBQcwAYYVaHR0cDovL3IzLm8ubGVuY3Iub3JnMCIGCCsGAQUFBzAChhZodHRw
-Oi8vcjMuaS5sZW5jci5vcmcvMCoGA1UdEQQjMCGCHzE0Ni0xOTAtMTAyLTE5OS5u
-aG9zdC4wMGNkbi5jb20wTAYDVR0gBEUwQzAIBgZngQwBAgEwNwYLKwYBBAGC3xMB
-AQEwKDAmBggrBgEFBQcCARYaaHR0cDovL2Nwcy5sZXRzZW5jcnlwdC5vcmcwggEF
-BgorBgEEAdZ5AgQCBIH2BIHzAPEAdgC3Pvsk35xNunXyOcW6WPRsXfxCz3qfNcSe
-HQmBJe20mQAAAYTGnkd4AAAEAwBHMEUCIEZCEr0XuOd1QL9Iz7FWsdfSElhuuVF7
-NE7mHouMcVZWAiEAvyOQqA6FgOJ+5sU5CGmlzzVp+Ha/aFdzKnlvBTdWAPwAdwB6
-MoxU2LcttiDqOOBSHumEFnAyE4VNO9IrwTpXo1LrUgAAAYTGnkeQAAAEAwBIMEYC
-IQCe0c73Yr2epRknPFYRVtvnfVMZfH8MNmDujj0ceVtjiQIhAMJR2Q51RcDK8Dza
-HJHljPPQ6A8wY8NrONB0aT8w50wXMA0GCSqGSIb3DQEBCwUAA4IBAQAwD4NwLU9B
-T9phkXLYbl088qMVexn3v3Ky6QNQ8/HU2jvu51cs8jYc1C0U+z+4lnraP+ai3cDe
-+EacqpiGEcfS0m2gwgi85NeNWsEfah9pD31USARUXBKDvug1jLtd6Y6Ue2f5sFVu
-OF04DlPUEvAn8rNx0TfpgoUMaugCwo5k3sTcWF6jARfFqKh9GsQBbmbRIgWPhnDn
-FlGKYabPxacyf7fbYZokUK2vvB5fQWM5t4oSp0sC41+5CWxjfvzRbSNnLMomQCQW
-okuNELSunie9rNp7AHBcULWFKY8QZ9vT6p404LWptena9um1lkOyRS6I7qAU1w68
-pK24X+k/CRmB
------END CERTIFICATE-----
-
------BEGIN CERTIFICATE-----
-MIIFFjCCAv6gAwIBAgIRAJErCErPDBinU/bWLiWnX1owDQYJKoZIhvcNAQELBQAw
-TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh
-cmNoIEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDEwHhcNMjAwOTA0MDAwMDAw
-WhcNMjUwOTE1MTYwMDAwWjAyMQswCQYDVQQGEwJVUzEWMBQGA1UEChMNTGV0J3Mg
-RW5jcnlwdDELMAkGA1UEAxMCUjMwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK
-AoIBAQC7AhUozPaglNMPEuyNVZLD+ILxmaZ6QoinXSaqtSu5xUyxr45r+XXIo9cP
-R5QUVTVXjJ6oojkZ9YI8QqlObvU7wy7bjcCwXPNZOOftz2nwWgsbvsCUJCWH+jdx
-sxPnHKzhm+/b5DtFUkWWqcFTzjTIUu61ru2P3mBw4qVUq7ZtDpelQDRrK9O8Zutm
-NHz6a4uPVymZ+DAXXbpyb/uBxa3Shlg9F8fnCbvxK/eG3MHacV3URuPMrSXBiLxg
-Z3Vms/EY96Jc5lP/Ooi2R6X/ExjqmAl3P51T+c8B5fWmcBcUr2Ok/5mzk53cU6cG
-/kiFHaFpriV1uxPMUgP17VGhi9sVAgMBAAGjggEIMIIBBDAOBgNVHQ8BAf8EBAMC
-AYYwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMBIGA1UdEwEB/wQIMAYB
-Af8CAQAwHQYDVR0OBBYEFBQusxe3WFbLrlAJQOYfr52LFMLGMB8GA1UdIwQYMBaA
-FHm0WeZ7tuXkAXOACIjIGlj26ZtuMDIGCCsGAQUFBwEBBCYwJDAiBggrBgEFBQcw
-AoYWaHR0cDovL3gxLmkubGVuY3Iub3JnLzAnBgNVHR8EIDAeMBygGqAYhhZodHRw
-Oi8veDEuYy5sZW5jci5vcmcvMCIGA1UdIAQbMBkwCAYGZ4EMAQIBMA0GCysGAQQB
-gt8TAQEBMA0GCSqGSIb3DQEBCwUAA4ICAQCFyk5HPqP3hUSFvNVneLKYY611TR6W
-PTNlclQtgaDqw+34IL9fzLdwALduO/ZelN7kIJ+m74uyA+eitRY8kc607TkC53wl
-ikfmZW4/RvTZ8M6UK+5UzhK8jCdLuMGYL6KvzXGRSgi3yLgjewQtCPkIVz6D2QQz
-CkcheAmCJ8MqyJu5zlzyZMjAvnnAT45tRAxekrsu94sQ4egdRCnbWSDtY7kh+BIm
-lJNXoB1lBMEKIq4QDUOXoRgffuDghje1WrG9ML+Hbisq/yFOGwXD9RiX8F6sw6W4
-avAuvDszue5L3sz85K+EC4Y/wFVDNvZo4TYXao6Z0f+lQKc0t8DQYzk1OXVu8rp2
-yJMC6alLbBfODALZvYH7n7do1AZls4I9d1P4jnkDrQoxB3UqQ9hVl3LEKQ73xF1O
-yK5GhDDX8oVfGKF5u+decIsH4YaTw7mP3GFxJSqv3+0lUFJoi5Lc5da149p90Ids
-hCExroL1+7mryIkXPeFM5TgO9r0rvZaBFOvV2z0gp35Z0+L4WPlbuEjN/lxPFin+
-HlUjr8gRsI3qfJOQFy/9rKIJR0Y/8Omwt/8oTWgy1mdeHmmjk7j1nYsvC9JSQ6Zv
-MldlTTKB3zhThV1+XWYp6rjd5JW1zbVWEkLNxE7GJThEUG3szgBVGP7pSWTUTsqX
-nLRbwHOoq7hHwg==
------END CERTIFICATE-----
-
------BEGIN CERTIFICATE-----
-MIIFYDCCBEigAwIBAgIQQAF3ITfU6UK47naqPGQKtzANBgkqhkiG9w0BAQsFADA/
-MSQwIgYDVQQKExtEaWdpdGFsIFNpZ25hdHVyZSBUcnVzdCBDby4xFzAVBgNVBAMT
-DkRTVCBSb290IENBIFgzMB4XDTIxMDEyMDE5MTQwM1oXDTI0MDkzMDE4MTQwM1ow
-TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh
-cmNoIEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDEwggIiMA0GCSqGSIb3DQEB
-AQUAA4ICDwAwggIKAoICAQCt6CRz9BQ385ueK1coHIe+3LffOJCMbjzmV6B493XC
-ov71am72AE8o295ohmxEk7axY/0UEmu/H9LqMZshftEzPLpI9d1537O4/xLxIZpL
-wYqGcWlKZmZsj348cL+tKSIG8+TA5oCu4kuPt5l+lAOf00eXfJlII1PoOK5PCm+D
-LtFJV4yAdLbaL9A4jXsDcCEbdfIwPPqPrt3aY6vrFk/CjhFLfs8L6P+1dy70sntK
-4EwSJQxwjQMpoOFTJOwT2e4ZvxCzSow/iaNhUd6shweU9GNx7C7ib1uYgeGJXDR5
-bHbvO5BieebbpJovJsXQEOEO3tkQjhb7t/eo98flAgeYjzYIlefiN5YNNnWe+w5y
-sR2bvAP5SQXYgd0FtCrWQemsAXaVCg/Y39W9Eh81LygXbNKYwagJZHduRze6zqxZ
-Xmidf3LWicUGQSk+WT7dJvUkyRGnWqNMQB9GoZm1pzpRboY7nn1ypxIFeFntPlF4
-FQsDj43QLwWyPntKHEtzBRL8xurgUBN8Q5N0s8p0544fAQjQMNRbcTa0B7rBMDBc
-SLeCO5imfWCKoqMpgsy6vYMEG6KDA0Gh1gXxG8K28Kh8hjtGqEgqiNx2mna/H2ql
-PRmP6zjzZN7IKw0KKP/32+IVQtQi0Cdd4Xn+GOdwiK1O5tmLOsbdJ1Fu/7xk9TND
-TwIDAQABo4IBRjCCAUIwDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAQYw
-SwYIKwYBBQUHAQEEPzA9MDsGCCsGAQUFBzAChi9odHRwOi8vYXBwcy5pZGVudHJ1
-c3QuY29tL3Jvb3RzL2RzdHJvb3RjYXgzLnA3YzAfBgNVHSMEGDAWgBTEp7Gkeyxx
-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
+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
+GUgQPD/BRiP7H6FJZ1Z6yRcq6Zaqrss=
 -----END CERTIFICATE-----
 EOF
 cat > /usr/local/heixrayr/1.key << EOF
 -----BEGIN PRIVATE KEY-----
-MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCnh7hKABGm7DZJ
-iu8q1KqhwlrqVMnSCrFufvCcAI8V6eIayIzdEtKHMDp683tnFWXqTtgiQAe6nQvl
-EO3LR2MEmNgYDz0fSoL8BmdL+ToUkYMgoCU7PsSw71am+7YgHSL8ldriF6K49obs
-W5zM22LggNDnQuyhIJAobnNFDFrpUy98VUNnSnBgX8ziUML2aMhOg8YETOH3KUdl
-az144n/SsgiW/egf+ciD6/F6eQoaNCgKOMB2WC5kA1ZrwDiakAuOAcEX8yK5GVfZ
-x8WV23pday84btpi5EWo13QG3qf1UykHtm8j3kUumBaX0U8RroyCpD7PUF+bk9zM
-y8rFwaDnAgMBAAECggEAD0r53TN1aQ3uBLecjoXcT6jcwMBdrgFQ4hvPXgZFCYSQ
-oc5F4ZZqxnF2HSwlyyquY32wCCxdKEFWySHK+z/4f35uV3/onfcgzt3Mxygoj6Ea
-3bsQuwBHVzl56QNYREU0oOcTFImAzq6ecWwJe7/ZHlJT/5Bh5nGBB1fRyO9QSzUp
-QRoFMQ9AARBExNCCPIelW4U5UvkYDxjtH60ITcFwmvcUcLOfTxhcqrwSGR/FebZT
-LGG2blUSUYBTV+Nfk0NerTfjOEliUD86zDycqhu4BOrBe1D4ZQAXobNPjAOGkquT
-tDL9ol7r0NiKitLBXJjhRToBplA65bifjFOT/x+1pQKBgQDlpHpZltSox+Fa9Kai
-DH876f97rlmLPCaLa6N1uAs6HdYoRd7peUoM9U1I+yK42SMxR8eTeb7/Q+ODQ5VZ
-fQeU7jMG0NqwKH3UM0vSyij9ZxMUa52CEUs6tNDKyBKC10+xsUD7fmIa3jB3KbW8
-x4qHfEHwyp/jikBhaeQhBFY+ewKBgQC6wjZYnpFVq93mChvorx8xPVvsW3Pnh1cx
-+ATuH/oyMpf92jNtXWCZmRJ1hkDq2tiR07ac5+iZPsc7Ute6sah5VnXPQm1BhS4o
-omFLJpHln9nPWwmK5kcBgVNwmM5jSO1OOYX/bkKfyWHkvJiOs5GM0bIjNpFotOVI
-S6Rx/VcRhQKBgQDL7+K8Fyfqb//g/63P8Zs4wRkjZHWfIh705/V1QKmvxfl/MHXD
-D/TER0CIVIbEdAk95YoGnTMSjN7KnsVOgKuwBk4IeogLsxnzzk5C90epqtUV6HAr
-p2IQ060suLs/uSjMHCcicV18kN+no8IC0Y5jveTti3Ss5QVBvYFcFPbmawKBgCjF
-5d+LHue5UgS7CETQltrFLqB3huJxZdP+9fSW/qSe7xf432ltDX37MVB/MwUTKl0L
-/75Z0ypBznVhLMARsVpsSeQp+Hhpfx5X9S3XCds7/u2KTpcIl0/40CKw+b4rWcPO
-Qzb0946zBLBPjG77PTelQGL3st9NPxF9kjVgvfWRAoGAArz833A2+ei70LqoT/hP
-twLNLF+MeZxsQkY00KOog+VCChGYMlpjxtAe1qxP08de+cSevItp+hJ9MklWKwLx
-Mg4Ymwey01faXPDTvvOi05hk3m2Jp+pIyy2OAQaXCrzisAgMFq8P2iiRB9etXK9d
-2H1TW7YMphDLvM9wvHj5Ua4=
+MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCY/YCPXtpfUWmE
+8/bad3CG0fFp/BuyZn4GSLjQmXQUGodySvi6obMiChsGDZkwYV1lEtmlFr2A04pO
+F24dBhDyCRGPCvNn7yTvBh8VboAtaUgNYDrXElA7MOpR+BJoaKaDyQaTapfEqrgY
+LiJEQDmgLf/E77wjHKEyWqE/eqMPcL2VwVGjk1mh+zdX/bYpfz40UquK3AHfMlPG
+V/myff+7DK28cTZ9SBlzwYTpIZj5A+NgODukSZTgcoZRWDyerIpuS+w95IHaFwU8
+AfHbisDVpCh7PCudVdvrtkMlQJ/dDmLIJtWCN70uIRG6Clw70EgEtz4KDRGMbSli
+l4g7hEz7AgMBAAECggEADCOqn0sEoyU9F7EZ/cTAwi8yFi73GE/x9lgFM3wcTfoQ
+PvKRoObIECPizWH9LUMUhjrELUl2zkblcFkt7LyjUekuolMuntPGx6E3NzFLl2Qw
+CkD/+jp4Rkdqgwg0QbedZX3pI9UEkjTaTa+KGttJF0Ypx3vJnwmcWs1T18sd2Xwr
+s81aC6B28libvF8tF9ETFtPxPl7skTNFc1Ougmv15T/NhHkDzh2kug+oDJV9O/nr
+uuYXbdY2zUJRwq9rg55p6QzgiQR16qMMyy66JA4gV0y16SJJBjBhU+W/zl0gS8sr
+s1I1aIiG171KKh+M/B+Ai8/67y17exqQLUNYc4uvbQKBgQDNf+19598K8OD7C494
+alh6Mpyv8vz1JravRkwGMTr+oCZdrL57cOOUGwUBdd6rV7VUv6+g2PvkV0ysMWso
+YBOwto6syAfPpO76EPJH2dwAThZyX1hzAe3VdHiPOfYpfln9kNm//cpnMGRjmzlY
+F9We37u24Y1iTWGbSZsds7QB7QKBgQC+li6DxyIZ7WwEgabXECqNf5SFEzC7b+cJ
+bn1uuoyxaLq9b12EhUkh8VxfI9xvDitp61A2gFyEZRb3q5J80ElFIR/yvez2H2pI
+8HxSVPcbkO3ex6gtyDF2SuogUPPV884cFiIg5Mvi/KOm3x6lMYjCumiCXfMJgw+x
+Yxdbyq9NhwKBgQCkdeo6JjRhjC9xmmnio7FVcmXlhmCdTbNMiMTU+9dL6h1qQJJd
+NhZb9FfIOG3Q0KvFPHcxEhZdQuSQtigdMu7vMNr0Ok3OByBeLuvHRvqDn/rk45tk
+xzlw5/qIHYn84Srh/GfX+CNg++CLurFk6AZFVKblEJPXBTjFT139olDAbQKBgQC2
+Rn4wLEiSEX9IhBNkBqMb91O9PlBSQ8DsRU8Tkrkyh55pxNPlBXCfVO5qU6rkT+H3
+iEWMCpHxUZl4wA/27WHWCss6Zqj176/AGLheKcK4C5FkiwFu39NmdlmbFLFQA8Ax
+Hn3/hbL14XhHBYeSqGBLFOsVG/NwOnfMyJ+ze5LTiwKBgDfvwHH9CSgIFlB6qdMP
+61szHXBPkPOiEN6H7FBR2c7ySG9CC0fva6Y3vwiHG2w8NRKn7dpbx6eidmAHXU+U
+gYn2mHG7ajK2dH1Yh3A1sBkm3WH5u40zM4UKnMnqrJrbWjUOym3Gw+6dhcY+aXZi
+y/v30vrUXhhBeGk43dRVaQG+
 -----END PRIVATE KEY-----
 EOF
 }
@@ -363,7 +346,8 @@ backend_docking_set(){
 	xrayr_file
 	crt_file
 	rulelist_file
-	docker run --restart=always --name heixrayr -d -v /usr/local/heixrayr/config.yml:/etc/XrayR/config.yml -v /usr/local/heixrayr/1.cert:/etc/XrayR/1.cert -v /usr/local/heixrayr/1.key:/etc/XrayR/1.key -v /usr/local/heixrayr/config.yml:/etc/XrayR/config.yml -v /usr/local/heixrayr/rulelist:/etc/XrayR/rulelist --network=host crackair/xrayr:latest
+	nginx_az
+	docker run --restart=always --name heixrayr -d -v /usr/local/heixrayr/config.yml:/etc/XrayR/config.yml -v /usr/local/heixrayr/1.cert:/etc/XrayR/1.cert -v /usr/local/heixrayr/1.key:/etc/XrayR/1.key -v /usr/local/heixrayr/config.yml:/etc/XrayR/config.yml -v /usr/local/heixrayr/rulelist:/etc/XrayR/rulelist -v /usr/local/heixrayr/route.json:/etc/XrayR/route.json -v /usr/local/heixrayr/custom_outbound.json:/etc/XrayR/custom_outbound.json --network=host crackair/xrayr:latest
         setenforce 0
         sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
         greenbg "恭喜您，后端节点已搭建成功"
@@ -410,8 +394,9 @@ start_menu(){
 	;;            
 	3)
     yellow "移除旧docker和证书配置文件夹"
-    docker rm -f heixrayrtrojan
     docker rm -f heixrayr
+    docker rm -f heixrayrtrojan
+    docker rm -f xrayr
     systemctl restart docker
     rm -rf /usr/local/xrayr/
     rm -rf /usr/local/heixrayr/
