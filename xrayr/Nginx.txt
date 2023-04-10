@@ -6,16 +6,20 @@ events {
 }
 http {
     server {
-    listen 8080 http2;
+    listen 443 ssl http2;
+	listen [::]:443 ssl http2;
     listen 80;
+	listen [::]:80;
+	server_name _;
+ 
+ssl_certificate /usr/local/heixrayr/1.cert; #这里是ssl key文件存放的绝对路径，根据自己的文件名称和路径来写
+ssl_certificate_key /usr/local/heixrayr/1.key; #这里是ssl key文件存放的绝对路径，根据自己的文件名称和路径来写
+ 
+ssl_session_cache shared:SSL:1m;
+ssl_session_timeout 5m;
+ssl_ciphers HIGH:!aNULL:!MD5;
+ssl_prefer_server_ciphers on;
+
   root /var/www/html; # 路径
   index index.php index.html;
-  server_name v-do-1.heimayun.top 159.223.192.8; # 域名
-return       301 https://www.efpan.one$request_uri;
-  location / {
-    try_files $uri /index.php$is_args$args;
-  }
-  location ~ \.php$ {
-    fastcgi_pass 127.0.0.1:9000; # unix:/run/php/php-fpm.sock;
-  }
 }}
