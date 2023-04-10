@@ -323,6 +323,13 @@ rm /etc/nginx/nginx.conf
 wget gx.heimayun.tk/xrayr/Nginx.txt -O /etc/nginx/nginx.conf
 nginx
 }
+acme_az(){
+curl https://get.acme.sh | sh
+~/.acme.sh/acme.sh --register-account -m xxxx@xxxx.com
+~/.acme.sh/acme.sh  --issue  -d $yuming  --webroot  /var/www/html
+~/.acme.sh/acme.sh --installcert -d $yuming --key-file /usr/local/heixrayr/1.key --fullchain-file /usr/local/heixrayr/1.cert
+nginx -s reload
+}
 # 以上步骤完成基础环境配置。
 echo "恭喜，您已完成基础环境安装，可执行安装程序。"
 
@@ -339,6 +346,7 @@ backend_docking_set(){
         green "节点ID,示例: 6"
         read -p "请输入节点ID1:" node_id
         read -p "请输入节点ID2:" node_id2
+	read -p "请输入节点域名:" yuming
         yellow "配置已完成，正在部署后端。。。。"
         start=$(date "+%s")
         install_tool
@@ -347,6 +355,7 @@ backend_docking_set(){
 	crt_file
 	rulelist_file
 	nginx_az
+	acme_az
 	docker run --restart=always --name heixrayr -d -v /usr/local/heixrayr/config.yml:/etc/XrayR/config.yml -v /usr/local/heixrayr/1.cert:/etc/XrayR/1.cert -v /usr/local/heixrayr/1.key:/etc/XrayR/1.key -v /usr/local/heixrayr/config.yml:/etc/XrayR/config.yml -v /usr/local/heixrayr/rulelist:/etc/XrayR/rulelist -v /usr/local/heixrayr/route.json:/etc/XrayR/route.json -v /usr/local/heixrayr/custom_outbound.json:/etc/XrayR/custom_outbound.json --network=host crackair/xrayr:latest
         setenforce 0
         sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
