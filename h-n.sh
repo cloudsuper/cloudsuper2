@@ -37,9 +37,7 @@ function white(){
 install_docker() {
     docker version > /dev/null || curl -fsSL get.docker.com | bash 
     service docker restart 
-    systemctl enable docker  
-    systemctl stop firewalld
-    systemctl disable firewalld
+    systemctl enable docker
     timedatectl set-timezone 'Asia/Shanghai'
     sysctl -w vm.panic_on_oom=1
     echo "添加定时任务"
