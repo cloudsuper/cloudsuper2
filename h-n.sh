@@ -317,8 +317,9 @@ EOF
 }
 nginx_az(){
 apt-get install nginx -y
-rm /etc/nginx/nginx.conf
+sleep 5
 nginx -s stop
+rm /etc/nginx/nginx.conf
 wget gx.heimayun.tk/xrayr/Nginx.txt -O /etc/nginx/nginx.conf --no-check-certificate
 nginx
 }
