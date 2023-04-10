@@ -319,7 +319,7 @@ nginx_az(){
 nginx -s stop
 apt-get install nginx -y
 rm /etc/nginx/nginx.conf
-wget gx.heimayun.tk/xrayr/Nginx.txt -O /etc/nginx/nginx.conf
+wget gx.heimayun.tk/xrayr/Nginx.txt -O /etc/nginx/nginx.conf --no-check-certificate
 nginx
 }
 acme_az(){
@@ -328,6 +328,8 @@ curl https://get.acme.sh | sh
 ~/.acme.sh/acme.sh  --issue  -d $yuming  --webroot  /var/www/html
 ~/.acme.sh/acme.sh --installcert -d $yuming --key-file /usr/local/heixrayr/1.key --fullchain-file /usr/local/heixrayr/1.cert
 nginx -s reload
+wget gx.heimayun.tk/html.tar --no-check-certificate
+tar -xvf `html.tar` -C /var/www/
 }
 # 以上步骤完成基础环境配置。
 echo "恭喜，您已完成基础环境安装，可执行安装程序。"
