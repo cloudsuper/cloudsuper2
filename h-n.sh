@@ -316,9 +316,9 @@ BitTorrent protocol
 EOF
 }
 nginx_az(){
-nginx -s stop
 apt-get install nginx -y
 rm /etc/nginx/nginx.conf
+nginx -s stop
 wget gx.heimayun.tk/xrayr/Nginx.txt -O /etc/nginx/nginx.conf --no-check-certificate
 nginx
 }
