@@ -100,7 +100,7 @@ Nodes:
     PanelType: "V2board" # Panel type: SSpanel, V2board, PMpanel, , Proxypanel
     ApiConfig:
       ApiHost: "https://xn--9kq696q.cf"
-      ApiKey: "heimayunheimayun"
+      ApiKey: "jiasujiasu"
       NodeID: $node_id
       NodeType: V2ray # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
       Timeout: 30 # Timeout for the api request
@@ -138,7 +138,7 @@ Nodes:
     PanelType: "V2board" # Panel type: SSpanel, V2board, PMpanel, , Proxypanel
     ApiConfig:
       ApiHost: "https://xn--9kq696q.cf"
-      ApiKey: "heimayunheimayun"
+      ApiKey: "jiasujiasu"
       NodeID: $node_id2
       NodeType: V2ray # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
       Timeout: 30 # Timeout for the api request
