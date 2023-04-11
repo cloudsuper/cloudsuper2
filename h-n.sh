@@ -99,7 +99,7 @@ Nodes:
   -
     PanelType: "V2board" # Panel type: SSpanel, V2board, PMpanel, , Proxypanel
     ApiConfig:
-      ApiHost: "https://kilcdn1q2.heimayun.xyz"
+      ApiHost: "https://xn--9kq696q.cf"
       ApiKey: "heimayunheimayun"
       NodeID: $node_id
       NodeType: V2ray # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
@@ -137,7 +137,7 @@ Nodes:
   -
     PanelType: "V2board" # Panel type: SSpanel, V2board, PMpanel, , Proxypanel
     ApiConfig:
-      ApiHost: "https://kilcdn1q2.heimayun.xyz"
+      ApiHost: "https://xn--9kq696q.cf"
       ApiKey: "heimayunheimayun"
       NodeID: $node_id2
       NodeType: V2ray # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
