@@ -18,3 +18,5 @@ https://www.azfaka.me/product/ 学生包
 检测代理IP：https://ip125.com
 检测IP类型：https://ipinfo.io
 检测IP欺诈：https://scamalytics.com/ip
+IP可用检测：https://www.toolsdaquan.com/ipcheck/
+IP信息：https://www.ipaddress.my/?lang=zh_CN
