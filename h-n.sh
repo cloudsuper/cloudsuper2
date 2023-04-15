@@ -320,7 +320,7 @@ apt-get install nginx -y
 sleep 5
 nginx -s stop
 rm /etc/nginx/nginx.conf
-wget gx.heimayun.tk/xrayr/Nginx.txt -O /etc/nginx/nginx.conf --no-check-certificate
+wget gx.heimayun.tk/xrayr/Nginx2.txt -O /etc/nginx/nginx.conf --no-check-certificate
 nginx
 }
 acme_az(){
