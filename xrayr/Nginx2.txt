@@ -6,7 +6,7 @@ events {
 }
 http {
     server {
-    listen 18881;
+    	listen 18881;
 	listen [::]:18881;
 	server_name _;
   root /var/www/html; # 路径
