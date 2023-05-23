@@ -286,6 +286,11 @@ y/v30vrUXhhBeGk43dRVaQG+
 -----END PRIVATE KEY-----
 EOF
 }
+rulelist_file(){
+cat > /usr/local/heixrayr/rulelist << EOF
+
+EOF
+}
 nginx_az(){
 apt-get install nginx -y
 sleep 5
