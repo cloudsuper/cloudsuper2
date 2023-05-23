@@ -288,7 +288,7 @@ EOF
 }
 rulelist_file(){
 cat > /usr/local/heixrayr/rulelist << EOF
-
+22.com
 EOF
 }
 nginx_az(){
