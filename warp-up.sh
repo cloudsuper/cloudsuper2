@@ -241,56 +241,6 @@ warpUp() {
   } >>"$LOG_FILE" 2>&1
 }
 
-#######
-# Run #
-#######
-
-if [ -z "$CI_BUILD" ] && [ -z "$DISCLAIMER_AGREE" ]; then
-  echo -ne "\ec"
-
-  echo " DISCLAIMER"
-  echo ""
-  echo " This software and information is designed for educational purposes only."
-  echo ""
-  echo " This information is provided 'as is' and in no event shall the"
-  echo " provider or 1-2.dev be liable for any damages, including, without"
-  echo " limitation, damages resulting from lost data or lost profits or"
-  echo " revenue, the costs of recovering such data, the costs of substitute"
-  echo " data, claims by third parties or for other similar costs, or any"
-  echo " special, incidental, or consequential damages arising out of use or"
-  echo " misuse of this data. The accuracy or reliability of the data is not"
-  echo " guaranteed or warranted in any way and the provider disclaim"
-  echo " liability of any kind whatsoever, including, without limitation,"
-  echo " liability for quality, performance, merchantability and fitness"
-  echo " for a particular purpose arising out of the use, or inability"
-  echo " to use the data. Information obtained via this software MUST"
-  echo " NEVER BE USED to take medical decisions."
-  echo ""
-  echo " All respective trademarks belong to Cloudflare, Inc."
-  echo " 1-2.dev is not affiliated with or endorsed by Cloudflare."
-  echo ""
-
-  while true; do
-    read -rep " Do you agree? (y/n): " yn </dev/tty
-
-    case "$yn" in
-    [Yy]*)
-      break
-      ;;
-    [Nn]*)
-      echo ""
-      echo " You did not agree to the disclaimer, therefore you are not allowed to use this software."
-      echo ""
-      exit
-      ;;
-    *)
-      echo -e " ${CYELLOW}Please answer yes or no.${CEND}"
-      echo ""
-      ;;
-    esac
-  done
-fi
-
 echo -ne "\ec"
 
 WELCOME_TXT="Welcome to Warp Up - $WARP_UP_VER"
