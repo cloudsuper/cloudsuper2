@@ -177,49 +177,73 @@ Nodes:
 EOF
 cat > /usr/local/heixrayr/route.json << EOF
 {
-    "domainStrategy": "IPOnDemand",
-    "rules": [
-        {
-            "type": "field",
-            "outboundTag": "block",
-            "ip": [
-                "geoip:private"
-            ]
-        },
-        {
-            "type": "field",
-            "outboundTag": "block",
-            "protocol": [
-                "bittorrent"
-            ]
-        },
-        {
-            "type": "field",
-            "outboundTag": "IPv6_out",
-            "domain": [
-                "geosite:netflix"
-            ]
-        }
-    ]
+  "domainStrategy": "IPOnDemand",
+  "rules": [
+    {
+      "type": "field",
+      "outboundTag": "block",
+      "ip": [
+        "geoip:private"
+      ]
+    },
+    {
+      "type": "field",
+      "outboundTag": "block",
+      "protocol": [
+        "bittorrent"
+      ]
+    },
+    {
+      "type": "field",
+      "outboundTag": "socks5-warp",
+      "network": "udp,tcp"
+    },
+    {
+      "type": "field",
+      "outboundTag": "IPv6_out",
+      "domain": [
+        "geosite:netflix"
+      ]
+    }
+  ]
 }
 EOF
 cat > /usr/local/heixrayr/custom_outbound.json << EOF
 [
-    {
-        "tag": "IPv4_out",
-        "protocol": "freedom"
-    },
-    {
-        "tag": "IPv6_out",
-        "protocol": "freedom",
-        "settings": {
-            "domainStrategy": "UseIPv6"
-        }
-    },
-    {
-        "protocol": "blackhole",
-        "tag": "block"
+  {
+    "tag": "IPv4_out",
+    "protocol": "freedom",
+    "settings": {}
+  },
+  {
+    "tag": "IPv6_out",
+    "protocol": "freedom",
+    "settings": {
+      "domainStrategy": "UseIPv6"
     }
+  },
+  {
+    "tag": "socks5-warp",
+    "protocol": "socks",
+    "settings": {
+      "servers": [
+        {
+          "address": "143.198.219.60",
+          "port": 1080,
+          "users": [
+              {
+                "user": "admin",
+                "pass": "hei"
+              }
+            ]
+        }
+      ]
+    }
+  },
+  {
+    "protocol": "blackhole",
+    "tag": "block"
+  }
 ]
 EOF
 }
