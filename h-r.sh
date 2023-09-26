@@ -332,7 +332,7 @@ backend_docking_set(){
 	xrayr_file
 	crt_file
 	rulelist_file
-	docker run --restart=always --name heixrayr -d -v /usr/local/heixrayr/config.yml:/etc/XrayR/config.yml -v /usr/local/heixrayr/1.cert:/etc/XrayR/1.cert -v /usr/local/heixrayr/1.key:/etc/XrayR/1.key -v /usr/local/heixrayr/config.yml:/etc/XrayR/config.yml -v /usr/local/heixrayr/rulelist:/etc/XrayR/rulelist -v /usr/local/heixrayr/route.json:/etc/XrayR/route.json -v /usr/local/heixrayr/custom_outbound.json:/etc/XrayR/custom_outbound.json --network=host tanzichao6/heixrayr-reality:v2
+	docker run --restart=always --name heixrayr -d -v /usr/local/heixrayr/config.yml:/etc/XrayR/config.yml -v /usr/local/heixrayr/1.cert:/etc/XrayR/1.cert -v /usr/local/heixrayr/1.key:/etc/XrayR/1.key -v /usr/local/heixrayr/config.yml:/etc/XrayR/config.yml -v /usr/local/heixrayr/rulelist:/etc/XrayR/rulelist -v /usr/local/heixrayr/route.json:/etc/XrayR/route.json -v /usr/local/heixrayr/custom_outbound.json:/etc/XrayR/custom_outbound.json --network=host tanzichao6/heixrayr-reality:v3
         setenforce 0
         sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
         greenbg "恭喜您，后端节点已搭建成功"
