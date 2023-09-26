@@ -85,32 +85,32 @@ install_tool() {
 xrayr_file(){
     cat > /usr/local/heixrayr/config.yml << EOF
 Log:
-  Level: none # Log level: none, error, warning, info, debug 
+  Level: warning # Log level: none, error, warning, info, debug 
   AccessPath: # /etc/XrayR/access.Log
   ErrorPath: # /etc/XrayR/error.log
-DnsConfigPath: # /etc/XrayR/dns.json # Path to dns config, check https://xtls.github.io/config/base/dns/ for help
-RouteConfigPath: # /etc/XrayR/route.json # Path to route config, check https://xtls.github.io/config/base/route/ for help
-OutboundConfigPath: # /etc/XrayR/custom_outbound.json # Path to custom outbound config, check https://xtls.github.io/config/base/outbound/ for help
-ConnetionConfig:
+DnsConfigPath: # /etc/XrayR/dns.json # Path to dns config, check https://xtls.github.io/config/dns.html for help
+RouteConfigPath: # /etc/XrayR/route.json # Path to route config, check https://xtls.github.io/config/routing.html for help
+InboundConfigPath: # /etc/XrayR/custom_inbound.json # Path to custom inbound config, check https://xtls.github.io/config/inbound.html for help
+OutboundConfigPath: # /etc/XrayR/custom_outbound.json # Path to custom outbound config, check https://xtls.github.io/config/outbound.html for help
+ConnectionConfig:
   Handshake: 4 # Handshake time limit, Second
-  ConnIdle: 10 # Connection idle time limit, Second
+  ConnIdle: 30 # Connection idle time limit, Second
   UplinkOnly: 2 # Time limit when the connection downstream is closed, Second
   DownlinkOnly: 4 # Time limit when the connection is closed after the uplink is closed, Second
-  BufferSize: 64 # The internal cache size of each connection, kB 
+  BufferSize: 64 # The internal cache size of each connection, kB
 Nodes:
-  -
-    PanelType: "V2board" # Panel type: SSpanel, V2board, PMpanel, , Proxypanel
+  - PanelType: "NewV2board" # Panel type: SSpanel, NewV2board, PMpanel, Proxypanel, V2RaySocks
     ApiConfig:
-      ApiHost: "https://xn--9kq696q.cf"
+      ApiHost: "https://xn--9kq696q.cf/"
       ApiKey: "jiasujiasujiasujiasu"
       NodeID: $node_id
       NodeType: V2ray # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
       Timeout: 30 # Timeout for the api request
-      EnableVless: false # Enable Vless for V2ray Type
-      EnableXTLS: false # Enable XTLS for V2ray and Trojan
+      EnableVless: true # Enable Vless for V2ray Type
+      VlessFlow: "xtls-rprx-vision" # Only support vless
       SpeedLimit: 0 # Mbps, Local settings will replace remote settings, 0 means disable
       DeviceLimit: 0 # Local settings will replace remote settings, 0 means disable
-      RuleListPath: /etc/XrayR/rulelist #Path to local rulelist file
+      RuleListPath: # /etc/XrayR/rulelist Path to local rulelist file
     ControllerConfig:
       ListenIP: 0.0.0.0 # IP address you want to listen
       SendIP: 0.0.0.0 # IP address you want to send pacakage
@@ -118,62 +118,49 @@ Nodes:
       EnableDNS: false # Use custom DNS config, Please ensure that you set the dns.json well
       DNSType: AsIs # AsIs, UseIP, UseIPv4, UseIPv6, DNS strategy
       EnableProxyProtocol: false # Only works for WebSocket and TCP
+      AutoSpeedLimitConfig:
+        Limit: 0 # Warned speed. Set to 0 to disable AutoSpeedLimit (mbps)
+        WarnTimes: 0 # After (WarnTimes) consecutive warnings, the user will be limited. Set to 0 to punish overspeed user immediately.
+        LimitSpeed: 0 # The speedlimit of a limited user (unit: mbps)
+        LimitDuration: 0 # How many minutes will the limiting last (unit: minute)
+      GlobalDeviceLimitConfig:
+        Enable: false # Enable the global device limit of a user
+        RedisAddr: 127.0.0.1:6379 # The redis server address
+        RedisPassword: YOUR PASSWORD # Redis password
+        RedisDB: 0 # Redis DB
+        Timeout: 5 # Timeout for redis request
+        Expiry: 60 # Expiry time (second)
       EnableFallback: false # Only support for Trojan and Vless
       FallBackConfigs:  # Support multiple fallbacks
-        -
-          SNI: # TLS SNI(Server Name Indication), Empty for any
-          Alpn: "h2" # Alpn, Empty for any
+        - SNI: # TLS SNI(Server Name Indication), Empty for any
+          Alpn: # Alpn, Empty for any
           Path: # HTTP PATH, Empty for any
-          Dest: 8080 # Required, Destination of fallback, check https://xtls.github.io/config/fallback/ for details.
-          ProxyProtocolVer: 0 # Send PROXY protocol version, 0 for dsable
+          Dest: 80 # Required, Destination of fallback, check https://xtls.github.io/config/features/fallback.html for details.
+          ProxyProtocolVer: 0 # Send PROXY protocol version, 0 for disable
+      EnableREALITY: true # Enable REALITY
+      REALITYConfigs:
+        Show: false # Show REALITY debug
+        Dest: m.media-amazon.com:443 # Required, Same as fallback
+        ProxyProtocolVer: 0 # Send PROXY protocol version, 0 for disable
+        ServerNames: # Required, list of available serverNames for the client, * wildcard is not supported at the moment.
+          - images.amazon.com
+          - m.media-amazon.com
+        PrivateKey: # 可不填
+        MinClientVer: # Optional, minimum version of Xray client, format is x.y.z.
+        MaxClientVer: # Optional, maximum version of Xray client, format is x.y.z.
+        MaxTimeDiff: 0 # Optional, maximum allowed time difference, unit is in milliseconds.
+        ShortIds: # 可不填
+          - ""
       CertConfig:
-        CertMode: none # Option about how to get certificate: none, file, http, dns. Choose "none" will forcedly disable the tls config.
-        CertDomain: "wp.heimayun.top" # Domain to cert
-        CertFile: /etc/XrayR/1.cert # Provided if the CertMode is file
-        KeyFile: /etc/XrayR/1.key
-        Provider: cloudflare # DNS cert provider, Get the full support list here: https://go-acme.github.io/lego/dns/
-        Email: heimacloud@gmail.com
+        CertMode: none # Option about how to get certificate: none, file, http, tls, dns. Choose "none" will forcedly disable the tls config.
+        CertDomain: "node1.test.com" # Domain to cert
+        CertFile: /etc/XrayR/cert/node1.test.com.cert # Provided if the CertMode is file
+        KeyFile: /etc/XrayR/cert/node1.test.com.key
+        Provider: alidns # DNS cert provider, Get the full support list here: https://go-acme.github.io/lego/dns/
+        Email: test@me.com
         DNSEnv: # DNS ENV option used by DNS provider
-          CLOUDFLARE_EMAIL: 777
-          CLOUDFLARE_API_KEY: 777
-  -
-    PanelType: "V2board" # Panel type: SSpanel, V2board, PMpanel, , Proxypanel
-    ApiConfig:
-      ApiHost: "https://xn--9kq696q.cf"
-      ApiKey: "jiasujiasujiasujiasu"
-      NodeID: $node_id2
-      NodeType: V2ray # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
-      Timeout: 30 # Timeout for the api request
-      EnableVless: false # Enable Vless for V2ray Type
-      EnableXTLS: false # Enable XTLS for V2ray and Trojan
-      SpeedLimit: 0 # Mbps, Local settings will replace remote settings, 0 means disable
-      DeviceLimit: 0 # Local settings will replace remote settings, 0 means disable
-      RuleListPath: /etc/XrayR/rulelist #Path to local rulelist file
-    ControllerConfig:
-      ListenIP: 0.0.0.0 # IP address you want to listen
-      SendIP: 0.0.0.0 # IP address you want to send pacakage
-      UpdatePeriodic: 60 # Time to update the nodeinfo, how many sec.
-      EnableDNS: false # Use custom DNS config, Please ensure that you set the dns.json well
-      DNSType: AsIs # AsIs, UseIP, UseIPv4, UseIPv6, DNS strategy
-      EnableProxyProtocol: false # Only works for WebSocket and TCP
-      EnableFallback: false # Only support for Trojan and Vless
-      FallBackConfigs:  # Support multiple fallbacks
-        -
-          SNI: # TLS SNI(Server Name Indication), Empty for any
-          Alpn: "h2" # Alpn, Empty for any
-          Path: # HTTP PATH, Empty for any
-          Dest: 8080 # Required, Destination of fallback, check https://xtls.github.io/config/fallback/ for details.
-          ProxyProtocolVer: 0 # Send PROXY protocol version, 0 for dsable
-      CertConfig:
-        CertMode: none # Option about how to get certificate: none, file, http, dns. Choose "none" will forcedly disable the tls config.
-        CertDomain: "wp.heimayun.top" # Domain to cert
-        CertFile: /etc/XrayR/1.cert # Provided if the CertMode is file
-        KeyFile: /etc/XrayR/1.key
-        Provider: cloudflare # DNS cert provider, Get the full support list here: https://go-acme.github.io/lego/dns/
-        Email: heimacloud@gmail.com
-        DNSEnv: # DNS ENV option used by DNS provider
-          CLOUDFLARE_EMAIL: 777
-          CLOUDFLARE_API_KEY: 777
+          ALICLOUD_ACCESS_KEY: aaa
+          ALICLOUD_SECRET_KEY: bbb
 EOF
 cat > /usr/local/heixrayr/route.json << EOF
 {
@@ -314,31 +301,7 @@ EOF
 }
 rulelist_file(){
 cat > /usr/local/heixrayr/rulelist << EOF
-BitTorrent protocol
-(api|ps|sv|offnavi|newvector|ulog\.imap|newloc)(\.map|)\.(baidu|n\.shifen)\.com
-(.+\.|^)(360|so)\.(cn|com)
-(Subject|HELO|SMTP)
-(torrent|\.torrent|peer_id=|info_hash|get_peers|find_node|BitTorrent|announce_peer|announce\.php\?passkey=)
-(^.*\@)(guerrillamail|guerrillamailblock|sharklasers|grr|pokemail|spam4|bccto|chacuo|027168)\.(info|biz|com|de|net|org|me|la)
-(.?)(xunlei|sandai|Thunder|XLLiveUD)(.)
-(.*\.||)(dafahao|minghui|dongtaiwang|epochtimes|ntdtv|falundafa|wujieliulan|zhengjian)\.(org|com|net)
-(.+.|^)(whatismyip|whatismyi­pad­dress|ipip|iplo­ca­tion|myip|whatismy­browser).(cn|com|net|com|net­work)
-(.*.||)(netvi­ga­tor|tor­pro­ject).(com|cn|net|org)
-(.*.||)(gov|12377|12315|talk.news.pts.org|cread­ers|zhuich­aguoji|efcc.org|cy­ber­po­lice|abolu­owang|tu­idang|epochtimes|ny­times|zhengjian|110.qq|mingjingnews|in­medi­ahk|xin­sheng|banned­book|nt­dtv|12321|se­cretchina|epochweekly|cn.rfi).(cn|com|org|net|club|net|fr|tw|hk)
-^esu.|^zhina.|w.esu.|w.zhina.
-(.*.||)(gov|12377|12315|talk.news.pts.org|cread­ers|zhuich­aguoji|efcc.org|cy­ber­po­lice|abolu­owang|tu­idang|epochtimes|dafa­hao|falundafa|minghui|falu­naz|zhengjian|110.qq|mingjingnews|in­medi­ahk|xin­sheng|banned­book|nt­dtv|falun­gong|12321|se­cretchina|epochweekly|cn.rfi).(cn|com|org|net|club|net|fr|tw|hk)
-(kpzip)(.)
-(.*.||)(ris­ing|king­soft|duba|xin­dubawukong|jin­shan­duba).(com|net|org)
-(.*.||)(miaozhen|cnzz|talk­ing­data|umeng).(cn|com)
-(.*.||)(ad-safe).(com)
-.cn­nic.net.cn
-(.*.||)(guan­jia.qq.com|qqpcmgr|QQPCMGR)
-(ed2k|.tor­rent|peer_id=|an­nounce|in­fo_hash|get_peers|find­_n­ode|Bit­Tor­rent|an­nounce_peer|an­nounce.php?passkey=|mag­net:|xun­lei|sandai|Thun­der|XL­LiveUD|bt_key)
-(.*.||)(shenzhoufilm|secretchina|renminbao|aboluowang|mhradio|guangming|zhengwunet|soundofhope|yuanming|shenyunperformingarts).(org|com|net|rocks|fr)
-(.*\.||)(ethermine|sigmapool|hashcity|2miners|solo-etc|nanopool|minergate|comining|give-me-coins|hiveon|arsmine|baikalmine|solopool|litecoinpool|mining-dutch|clona|viabtc|beepool|maxhash|bwpool|coinminerz|miningcore|multipools|uupool|minexmr|pandaminer|f2pool|sparkpool|antpool|poolin|slushpool|marathondh|pool.btc)\.(cn|com|org|net|club|net|fr|tw|hk|eu|info|me|io)
-(.*.||)(weibo|zhihu|toutiao|bytedance|zijieapi|xiaohongshu|xhscdn).(cn|com)
-\b([\w-]+\.)*pincong\.rocks
-(.?)(pincong|twreporter|gnews|lihkg)(.) 
+www.636yyy666.com
 EOF
 }
 nginx_az(){
@@ -362,7 +325,6 @@ backend_docking_set(){
         greenbg "使用前请准备好 redbg "节点ID""
         green "节点ID,示例: 6"
         read -p "请输入节点ID1:" node_id
-        read -p "请输入节点ID2:" node_id2
         yellow "配置已完成，正在部署后端。。。。"
         start=$(date "+%s")
         install_tool
