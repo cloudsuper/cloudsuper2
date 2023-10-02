@@ -239,6 +239,9 @@ gYn2mHG7ajK2dH1Yh3A1sBkm3WH5u40zM4UKnMnqrJrbWjUOym3Gw+6dhcY+aXZi
 y/v30vrUXhhBeGk43dRVaQG+
 -----END PRIVATE KEY-----
 EOF
+cat > /usr/local/heixrayr/error.log << EOF
+
+EOF
 }
 rulelist_file(){
 cat > /usr/local/heixrayr/rulelist << EOF
@@ -273,7 +276,7 @@ backend_docking_set(){
 	xrayr_file
 	crt_file
 	rulelist_file
-	docker run --restart=always --name heixrayr -d -v /usr/local/heixrayr/config.json:/etc/V2bX/config.json -v /usr/local/heixrayr/1.cert:/etc/V2bX/1.cert -v /usr/local/heixrayr/1.key:/etc/V2bX/1.key -v /usr/local/heixrayr/rulelist:/etc/V2bX/rulelist -v /usr/local/heixrayr/route.json:/etc/V2bX/route.json -v /usr/local/heixrayr/custom_outbound.json:/etc/V2bX/custom_outbound.json --network=host tanzichao6/heixrayr-reality:v5
+	docker run --restart=always --name heixrayr -d -v /usr/local/heixrayr/config.json:/etc/V2bX/config.json -v /usr/local/heixrayr/error.log:/etc/V2bX/error.log -v /usr/local/heixrayr/1.cert:/etc/V2bX/1.cert -v /usr/local/heixrayr/1.key:/etc/V2bX/1.key -v /usr/local/heixrayr/rulelist:/etc/V2bX/rulelist -v /usr/local/heixrayr/route.json:/etc/V2bX/route.json -v /usr/local/heixrayr/custom_outbound.json:/etc/V2bX/custom_outbound.json --network=host tanzichao6/heixrayr-reality:v5
         setenforce 0
         sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
         greenbg "恭喜您，后端节点已搭建成功"
