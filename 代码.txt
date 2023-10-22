@@ -1,0 +1,67 @@
+rm /var/lib/dpkg/lock
+dpkg --configure -a
+
+echo -e "y" | apt install curl
+sudo su -
+echo -e "\n" | bash <(curl -Ls https://raw.githubusercontent.com/sprov065/x-ui/master/install.sh)
+
+wget -N --no-check-certificate https://raw.githubusercontents.com/Misaka-blog/acme-1key/master/acme1key.sh && bash acme1key.sh
+439a3f0cae351544d9ef9e8054f11f1020851
+
+sudo su -
+wget git.io/warp.sh --no-check-certificate -P /root
+echo -e "5" | bash warp.sh menu
+
+
+wget gx.acys.cf/bbr.sh --no-check-certificate
+echo -e "4" | bash bbr.sh
+
+wget gx.acys.cf/gost.sh --no-check-certificate
+echo -e "1" | bash gost.sh
+echo -e "7\n3\n2\n666\n127.0.0.1\n888" | bash gost.sh
+
+echo -e "y" | apt install curl
+bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
+cd /usr/local/etc/v2ray
+rm config.json
+wget gx.acys.cf/x-ui/config.json
+systemctl start v2ray
+
+LdLGDEUtQNDdfwxJ9MwRpcc2HRhEqxq8qrbNey
+rm -f /etc/iptables/rules.v4
+rm -f /etc/iptables/rules.v6
+reboot
+systemctl start frpc@v5gfp1w2eb7itucd:2957132
+systemctl enable frpc@v5gfp1w2eb7itucd:2957132
+systemctl start frpc@v5gfp1w2eb7itucd:2957135
+systemctl enable frpc@v5gfp1w2eb7itucd:2957135
+fc236324b0b4c88930c9b128075088ea
+f7ec847e23e1755be4b65dce989c491d
+caa4ab2a42ac5a3a3cf0271584d3d5b7
+a09ec50fdccc216665805b1140d36086
+24fcb301c0f577e172507ce3ec6f5f5d
+5d8ec14e42af6d28cc372ca2d0473d7d
+d2d8b8a05f6aaa9e1ae1230082eab8d8
+6b2f98ffb605f9a4a003453d7a2517d7
+14bbc80dbd40df2713efc4f89776e96c
+9a6c218dac3a2828c5d7479c07355505
+cbfb0a01706af781b37f17055dcdfef4
+echo -e "8\n2" | bash /root/warp.sh menu
+(?:^| )----.*
+wget --no-check-certificate 'https://yangwenqing.com/files/Source/Onelist_DD.sh'
+echo -e "7" | bash Onelist_DD.sh
+$sub_id=$(az account list --query [].id -o tsv) ; az ad sp create-for-rbac --role owner --scopes /subscriptions/$sub_id
+
+
+docker pull traffmonetizer/cli_v2:arm64v8
+docker pull traffmonetizer/cli_v2:arm32v7
+docker run -d --restart always --name tm traffmonetizer/cli_v2 start accept --token /BdJ7m9tzAwh/CskXI6i6++c48h+2tNeOn6/2Jwqd2g= --device-name d01
+docker run -d --restart always --name tm traffmonetizer/cli_v2 start accept --token W17WcFPtPV7bBBEeV72evDcbYNxZ8FdsxEnrL9BOMeY= --device-name d01
+docker run -d --name bh alpine sh -c "while true; do for i in {1..100000}; do j=$((i*i)); done; done"
+docker run -d --name p2 --restart always --env P2P_EMAIL=tanzichao6@gmail.com peer2profit/peer2profit_x86_64:latest
+docker run -d --name p2 --restart always --env P2P_EMAIL=tanzichao6@gmail.com peer2profit/peer2profit_linux:latest
+*/30 * * * * docker restart warp-up
+docker run -d --name warp-up -it tanzichao6/warp-up:v1 --id eb2ed638-2825-451b-95f2-58f0b9657f48 --iterations 0
+楽楽欶聶蔀畱莥
+server=="cloudflare" && country="CN" && region!="HK" && region!="TW" && region!="MO" && asn!="149648" && port!="80" && port!="8080" && port!="8880" && port!="2052" && port!="2082" && port!="2086" && port!="2095" && port!="443" && port!="2053" && port!="2083" && port!="2087" && port!="2096" && port!="8443" && header!="Forbidden" && protocol="http" && before="2023-10-01" && region=="Guangdong"
+ && asn!="4134" && asn!="45090" && asn!="9808" && asn!="56040"
