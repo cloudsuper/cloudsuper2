@@ -101,7 +101,7 @@ Nodes:
   -
     PanelType: "V2board" # Panel type: SSpanel, V2board, PMpanel, , Proxypanel
     ApiConfig:
-      ApiHost: "https://hei.ll.heicloud.cf"
+      ApiHost: "https://heicloud.eu.org"
       ApiKey: "jiasujiasujiasujiasu"
       NodeID: $node_id
       NodeType: V2ray # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
