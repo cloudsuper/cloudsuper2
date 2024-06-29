@@ -1,0 +1,1 @@
+*/5 * * * * /bin/bash /etc/shutdown.sh > /etc/cron_shutdown_debug.log 2>&1
