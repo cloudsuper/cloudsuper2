@@ -1,0 +1,44 @@
+{
+  "log": {
+    "loglevel": "info"
+  },
+  "inbounds": [
+    {
+      "listen": "127.0.0.1",
+      "port": "10808",
+      "protocol": "socks"
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "http",
+      "settings": {
+        "servers": [
+          {
+            "address": "14.215.179.244",
+            "port": 443
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "tcpSettings": {
+          "header": {
+            "type": "http",
+            "request": {
+              "headers": {
+                "Host": [
+                  "www.bing.com"
+                ],
+                "User-Agent": [
+                  "baiduboxapp"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "tag": "proxy"
+    }
+  ]
+}
