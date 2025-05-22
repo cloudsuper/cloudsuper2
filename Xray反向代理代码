@@ -1,0 +1,90 @@
+{
+"api": {
+    "services": [
+      "HandlerService",
+      "LoggerService",
+      "StatsService"
+    ],
+    "tag": "api"
+  },
+
+  "inbounds": [
+    {
+      "listen": "127.0.0.1",
+      "port": 62789,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "address": "127.0.0.1"
+      },
+      "tag": "api"
+    }
+  ],  
+ "policy": {
+    "system": {
+      "statsInboundDownlink": true,
+      "statsInboundUplink": true
+    },
+     "levels": {
+      "0": {
+        "handshake": 10,
+        "connIdle": 100,
+        "uplinkOnly": 2,
+        "downlinkOnly": 3,
+        "bufferSize": 10240  
+      }
+    }
+  },
+"outbounds": [
+{
+"protocol": "blackhole",
+"tag": "blocked"
+},
+{
+"tag": "direct",
+"protocol": "freedom",
+"settings": {
+"domainStrategy":"UseIP"
+}
+}
+],
+"routing": {
+"domainStrategy": "AsIs",
+"rules": [
+{
+        "inboundTag": [
+          "api"
+        ],
+        "outboundTag": "api",
+        "type": "field"
+      },      
+	  {
+        "domain": [
+          "full:reverse.xui"
+        ],
+        "outboundTag": "reverse-0",
+        "inboundTag": [
+          "inbound-6666"
+        ],
+        "type": "field"
+      },
+      {
+        "outboundTag": "reverse-0",
+        "inboundTag": [
+          "inbound-8822",
+          "inbound-8866",
+          "inbound-18881"
+        ],
+        "type": "field"
+      }
+]
+},
+"stats": {},
+  "reverse": {
+    "portals": [
+      {
+        "tag": "reverse-0",
+        "domain": "reverse.xui"
+      }
+    ]
+  }
+}
