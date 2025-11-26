@@ -140,11 +140,11 @@ Nodes:
       EnableREALITY: true # Enable REALITY
       REALITYConfigs:
         Show: false # Show REALITY debug
-        Dest: m.media-amazon.com:443 # Required, Same as fallback
+        Dest: www.apple.com:443 # Required, Same as fallback
         ProxyProtocolVer: 0 # Send PROXY protocol version, 0 for disable
         ServerNames: # Required, list of available serverNames for the client, * wildcard is not supported at the moment.
-          - images.amazon.com
-          - m.media-amazon.com
+          - www.apple.com
+          - apple.com
         PrivateKey: # 可不填
         MinClientVer: # Optional, minimum version of Xray client, format is x.y.z.
         MaxClientVer: # Optional, maximum version of Xray client, format is x.y.z.
