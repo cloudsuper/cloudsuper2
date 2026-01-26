@@ -6,7 +6,7 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 #check root
 [ $(id -u) != "0" ] && { echo "错误: 您必须以root用户运行此脚本"; exit 1; }
-mkdir -p -m 777 /usr/local/heixrayr
+mkdir -p -m 777 /usr/local/heixrayr-v2
 #
 # 设置字体颜色函数
 function blue(){
@@ -83,7 +83,7 @@ install_tool() {
 }
 #写入xrayr配置文件
 xrayr_file(){
-    cat > /usr/local/heixrayr/config.yml << EOF
+    cat > /usr/local/heixrayr-v2/config.yml << EOF
 Log:
   Level: none # Log level: none, error, warning, info, debug 
   AccessPath: # /etc/XrayR/access.Log
@@ -137,7 +137,7 @@ Nodes:
           CLOUDFLARE_EMAIL: 777
           CLOUDFLARE_API_KEY: 777
 EOF
-cat > /usr/local/heixrayr/route.json << EOF
+cat > /usr/local/heixrayr-v2/route.json << EOF
 {
   "domainStrategy": "IPOnDemand",
   "rules": [
@@ -170,7 +170,7 @@ cat > /usr/local/heixrayr/route.json << EOF
   ]
 }
 EOF
-cat > /usr/local/heixrayr/custom_outbound.json << EOF
+cat > /usr/local/heixrayr-v2/custom_outbound.json << EOF
 [
   {
     "tag": "IPv4_out",
@@ -211,7 +211,7 @@ EOF
 }
 #写入证书文件
 crt_file(){
-    cat > /usr/local/heixrayr/1.cert << EOF
+    cat > /usr/local/heixrayr-v2/1.cert << EOF
 -----BEGIN CERTIFICATE-----
 MIIFIzCCBAugAwIBAgISA/XjQxubOxxXKbCsMX9/mhETMA0GCSqGSIb3DQEBCwUA
 MDIxCzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MQswCQYDVQQD
@@ -243,7 +243,7 @@ d98SQ/QxJHrKAJ/ZgbEzJa+vSCIY/vDlUePrGSnD3z0fvemlHcrDhoFkXCL0DhRD
 GUgQPD/BRiP7H6FJZ1Z6yRcq6Zaqrss=
 -----END CERTIFICATE-----
 EOF
-cat > /usr/local/heixrayr/1.key << EOF
+cat > /usr/local/heixrayr-v2/1.key << EOF
 -----BEGIN PRIVATE KEY-----
 MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCY/YCPXtpfUWmE
 8/bad3CG0fFp/BuyZn4GSLjQmXQUGodySvi6obMiChsGDZkwYV1lEtmlFr2A04pO
@@ -275,7 +275,7 @@ y/v30vrUXhhBeGk43dRVaQG+
 EOF
 }
 rulelist_file(){
-cat > /usr/local/heixrayr/rulelist << EOF
+cat > /usr/local/heixrayr-v2/rulelist << EOF
 BitTorrent protocol
 (api|ps|sv|offnavi|newvector|ulog\.imap|newloc)(\.map|)\.(baidu|n\.shifen)\.com
 (.+\.|^)(360|so)\.(cn|com)
@@ -332,7 +332,7 @@ backend_docking_set(){
 	xrayr_file
 	crt_file
 	rulelist_file
-	docker run --restart=always --name heixrayr -d -v /usr/local/heixrayr/config.yml:/etc/XrayR/config.yml -v /usr/local/heixrayr/1.cert:/etc/XrayR/1.cert -v /usr/local/heixrayr/1.key:/etc/XrayR/1.key -v /usr/local/heixrayr/config.yml:/etc/XrayR/config.yml -v /usr/local/heixrayr/rulelist:/etc/XrayR/rulelist -v /usr/local/heixrayr/route.json:/etc/XrayR/route.json -v /usr/local/heixrayr/custom_outbound.json:/etc/XrayR/custom_outbound.json --network=host crackair/xrayr:latest
+	docker run --restart=always --name heixrayr-v2 -d -v /usr/local/heixrayr-v2/config.yml:/etc/XrayR/config.yml -v /usr/local/heixrayr-v2/1.cert:/etc/XrayR/1.cert -v /usr/local/heixrayr-v2/1.key:/etc/XrayR/1.key -v /usr/local/heixrayr-v2/config.yml:/etc/XrayR/config.yml -v /usr/local/heixrayr-v2/rulelist:/etc/XrayR/rulelist -v /usr/local/heixrayr-v2/route.json:/etc/XrayR/route.json -v /usr/local/heixrayr-v2/custom_outbound.json:/etc/XrayR/custom_outbound.json --network=host crackair/xrayr:latest
         setenforce 0
         sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
         greenbg "恭喜您，后端节点已搭建成功"
@@ -379,12 +379,12 @@ start_menu(){
 	;;            
 	3)
     yellow "移除旧docker和证书配置文件夹"
-    docker rm -f heixrayr
-    docker rm -f heixrayrtrojan
+    docker rm -f heixrayr-v2
+    docker rm -f heixrayr-v2trojan
     docker rm -f xrayr
     systemctl restart docker
     rm -rf /usr/local/xrayr/
-    rm -rf /usr/local/heixrayr/
+    rm -rf /usr/local/heixrayr-v2/
 	;;    
 	4)
     yellow "安装aapanel宝塔"
